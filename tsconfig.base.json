@@ -1,0 +1,34 @@
+{
+    "compilerOptions": {
+        "composite": true,
+        "declarationMap": true,
+        "emitDeclarationOnly": true,
+        "importHelpers": true,
+        "isolatedModules": true,
+        "lib": [
+            "es2023"
+        ],
+        "module": "nodenext",
+        "moduleResolution": "nodenext",
+        "noEmitOnError": true,
+        "skipLibCheck": true,
+        "target": "es2022",
+        "useDefineForClassFields": false,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "baseUrl": "./",
+        "customConditions": [
+            "@jt4d/source"
+        ],
+
+        /* Linting */
+        "strict": true,
+        "useUnknownInCatchVariables": false,
+        "strictPropertyInitialization": false,
+
+        "noImplicitAny": true,
+        "noImplicitOverride": true,
+        "noImplicitReturns": true,
+        "noUnusedLocals": false
+    }
+}

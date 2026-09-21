@@ -1,0 +1,68 @@
+{
+    "name": "@jt4d/source",
+    "version": "0.0.0",
+    "private": true,
+    "workspaces": [
+        "apps/*",
+        "packages/*"
+    ],
+    "scripts": {
+        "build": "nx run-many -t build",
+        "clean": "nx run-many -t clean",
+        "lint": "run-s lint:fix",
+        "lint:check": "run-s lint:typecheck lint:*:check",
+        "lint:eslint:check": "nx run-many -t lint-check",
+        "lint:eslint:fix": "nx run-many -t lint",
+        "lint:fix": "run-s lint:*:fix lint:typecheck",
+        "lint:format:check": "nx run-many -t format-check",
+        "lint:format:fix": "nx run-many -t format",
+        "lint:typecheck": "nx run-many -t typecheck",
+        "prepare": "husky",
+        "rebuild": "nx run-many -t clean && nx run-many -t build",
+        "release": "nx release --skip-publish",
+        "start": "nx run playground:serve",
+        "test": "nx run-many -t test"
+    },
+    "lint-staged": {
+        "*.{json,ts,js,mjs,md,mdx,yaml,yml}": "prettier --write",
+        "{apps,packages}/*/src/**/*.ts": "eslint --quiet --fix",
+        "package.json": "sort-package-json"
+    },
+    "resolutions": {
+        "vite": "^7.0.0"
+    },
+    "devDependencies": {
+        "@eslint/js": "^9.39.4",
+        "@nx/eslint": "^22.6.1",
+        "@nx/eslint-plugin": "^22.6.1",
+        "@nx/js": "^22.6.1",
+        "@nx/nest": "^22.6.1",
+        "@nx/vitest": "^22.6.1",
+        "@swc/core": "^1.15.21",
+        "@swc/helpers": "^0.5.19",
+        "@types/node": "^22.15.0",
+        "@vitest/coverage-v8": "^4.1.0",
+        "@vitest/ui": "^4.1.0",
+        "eslint": "^9.39.4",
+        "eslint-config-prettier": "^10.1.8",
+        "eslint-plugin-import-x": "^4.16.2",
+        "eslint-plugin-unused-imports": "^4.4.1",
+        "husky": "^9.1.7",
+        "lint-staged": "^16.2.7",
+        "npm-run-all": "^4.1.5",
+        "nx": "^22.6.1",
+        "prettier": "^3.8.1",
+        "rimraf": "^6.1.3",
+        "sort-package-json": "^3.6.1",
+        "tslib": "^2.8.1",
+        "typescript": "~5.9.3",
+        "typescript-eslint": "^8.57.0",
+        "unplugin-swc": "^1.5.10",
+        "vite": "^7.0.0",
+        "vitest": "^4.1.0"
+    },
+    "packageManager": "yarn@1.22.22",
+    "nx": {
+        "includedScripts": []
+    }
+}

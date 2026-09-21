@@ -1,8 +1,21 @@
-# Nestjs specific
-/dist
-/node_modules
-/build
-/tmp
+# compiled output
+dist
+build
+out-tsc
+*.tsbuildinfo
+
+# dependencies
+node_modules
+
+# nx
+.nx/cache
+.nx/workspace-data
+
+# test artifacts
+coverage
+test-output
+vite.config.*.timestamp*
+vitest.config.*.timestamp*
 
 # Logs
 logs
@@ -13,6 +26,14 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
+# IDEs and editors
+/.idea
+.project
+.classpath
+.settings/
+.vscode/*
+!.vscode/extensions.json
+
 # dotenv environment variable files
 .env
 .env.development
@@ -20,5 +41,10 @@ lerna-debug.log*
 .env.production
 
 # temp directory
+/tmp
 .temp
 .tmp
+
+# System Files
+.DS_Store
+Thumbs.db
