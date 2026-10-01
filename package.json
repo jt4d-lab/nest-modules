@@ -9,7 +9,7 @@
     "scripts": {
         "build": "nx run-many -t build",
         "clean": "nx run-many -t clean",
-        "lint": "run-s lint:fix",
+        "lint": "yarn lint:fix",
         "lint:check": "run-s lint:typecheck lint:*:check",
         "lint:eslint:check": "nx run-many -t lint-check",
         "lint:eslint:fix": "nx run-many -t lint",
