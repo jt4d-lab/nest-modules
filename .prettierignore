@@ -1,0 +1,11 @@
+# Add files here to ignore them from prettier formatting
+dist
+out-tsc
+coverage
+test-output
+node_modules
+.nx/cache
+.nx/workspace-data
+.claude
+*.tsbuildinfo
+yarn.lock
