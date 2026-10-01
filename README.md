@@ -19,6 +19,7 @@ apps/
   playground/     Демо-приложение NestJS, потребитель пакетов (private)
 packages/
   common/         @jt4d/common — публикуемая библиотека
+  rbac/           @jt4d/rbac — RBAC поверх @jt4d/common
 ```
 
 Оркестрация — Nx 22 в режиме TypeScript project references: каждый пакет собирается через
