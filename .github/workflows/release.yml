@@ -71,7 +71,7 @@ jobs:
                   fi
 
                   while IFS= read -r package_dir; do
-                      npm publish "$package_dir" \
+                      npm publish "./$package_dir" \
                           --access public \
                           --provenance \
                           --registry https://registry.npmjs.org \
