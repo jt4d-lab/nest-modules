@@ -1,0 +1,73 @@
+{
+    "name": "playground",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "apps/playground/src",
+    "projectType": "application",
+    "tags": [
+        "type:app"
+    ],
+    "targets": {
+        "build": {
+            "executor": "nx:run-commands",
+            "cache": true,
+            "dependsOn": [
+                "^build"
+            ],
+            "outputs": [
+                "{workspaceRoot}/apps/playground/dist"
+            ],
+            "options": {
+                "command": "tsc --build tsconfig.app.json",
+                "cwd": "{projectRoot}"
+            }
+        },
+        "serve": {
+            "continuous": true,
+            "executor": "@nx/js:node",
+            "dependsOn": [
+                "build"
+            ],
+            "options": {
+                "buildTarget": "playground:build"
+            }
+        },
+        "lint": {
+            "executor": "@nx/eslint:lint",
+            "options": {
+                "lintFilePatterns": [
+                    "{projectRoot}/**/*.ts"
+                ],
+                "eslintConfig": "{projectRoot}/eslint.config.mjs",
+                "fix": true
+            }
+        },
+        "lint-check": {
+            "executor": "@nx/eslint:lint",
+            "options": {
+                "lintFilePatterns": [
+                    "{projectRoot}/**/*.ts"
+                ],
+                "eslintConfig": "{projectRoot}/eslint.config.mjs"
+            }
+        },
+        "format": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "prettier --write {projectRoot}"
+            }
+        },
+        "format-check": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "prettier --check {projectRoot}"
+            }
+        },
+        "clean": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "rimraf dist out-tsc",
+                "cwd": "{projectRoot}"
+            }
+        }
+    }
+}
