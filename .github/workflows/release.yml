@@ -33,17 +33,20 @@ jobs:
                   EVENT_NAME: ${{ github.event_name }}
                   REF_NAME: ${{ github.ref_name }}
                   RUN_ID: ${{ github.run_id }}
+                  REPOSITORY_URL: https://github.com/${{ github.repository }}
                   PACKAGE_LIST: ${{ runner.temp }}/packages-to-publish
               run: |
                   if [[ "$EVENT_NAME" == 'push' ]]; then
                       node tools/prepare-release.mjs \
                           --mode stable \
                           --version "${REF_NAME#v}" \
+                          --repository "$REPOSITORY_URL" \
                           --output "$PACKAGE_LIST"
                   else
                       node tools/prepare-release.mjs \
                           --mode canary \
                           --run-id "$RUN_ID" \
+                          --repository "$REPOSITORY_URL" \
                           --output "$PACKAGE_LIST"
                   fi
 

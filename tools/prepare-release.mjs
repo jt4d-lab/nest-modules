@@ -100,16 +100,25 @@ function updateInternalDependencies(manifest, packageVersions, mode) {
     }
 }
 
+function updateRepository(manifest, repository, directory) {
+    manifest.repository = {
+        type: 'git',
+        url: repository,
+        directory,
+    };
+}
+
 async function main() {
     const {
         mode,
         version: stableVersion,
         'run-id': runId,
         output,
+        repository,
     } = parseArguments(process.argv.slice(2));
 
-    if (!mode || !output) {
-        fail('Both --mode and --output are required.');
+    if (!mode || !output || !repository) {
+        fail('--mode, --output, and --repository are required.');
     }
 
     if (mode === 'stable' && !stableVersion) {
@@ -140,6 +149,7 @@ async function main() {
         const { manifest, manifestPath } = packageInfo;
         manifest.version = packageVersions.get(manifest.name);
         updateInternalDependencies(manifest, packageVersions, mode);
+        updateRepository(manifest, repository, packageInfo.directory);
         await writeFile(manifestPath, `${JSON.stringify(manifest, null, 4)}\n`);
     }
 
