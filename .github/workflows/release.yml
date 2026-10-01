@@ -1,0 +1,80 @@
+name: Publish libraries
+
+on:
+    push:
+        tags:
+            - 'v*.*.*'
+    workflow_dispatch:
+
+concurrency:
+    group: npm-publish
+    cancel-in-progress: false
+
+permissions:
+    contents: read
+    id-token: write
+
+jobs:
+    publish:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+
+            - uses: actions/setup-node@v4
+              with:
+                  node-version-file: .nvmrc
+                  cache: yarn
+                  registry-url: https://registry.npmjs.org
+
+            - name: Install dependencies
+              run: yarn install --frozen-lockfile
+
+            - name: Prepare package versions
+              env:
+                  EVENT_NAME: ${{ github.event_name }}
+                  REF_NAME: ${{ github.ref_name }}
+                  RUN_ID: ${{ github.run_id }}
+                  PACKAGE_LIST: ${{ runner.temp }}/packages-to-publish
+              run: |
+                  if [[ "$EVENT_NAME" == 'push' ]]; then
+                      node tools/prepare-release.mjs \
+                          --mode stable \
+                          --version "${REF_NAME#v}" \
+                          --output "$PACKAGE_LIST"
+                  else
+                      node tools/prepare-release.mjs \
+                          --mode canary \
+                          --run-id "$RUN_ID" \
+                          --output "$PACKAGE_LIST"
+                  fi
+
+            - name: Lint
+              run: yarn lint:check
+
+            - name: Test
+              run: yarn test
+
+            - name: Build
+              run: yarn build
+
+            - name: Update npm
+              run: npm install --global npm@^11.5.1
+
+            - name: Publish packages
+              env:
+                  EVENT_NAME: ${{ github.event_name }}
+                  PACKAGE_LIST: ${{ runner.temp }}/packages-to-publish
+              run: |
+                  if [[ "$EVENT_NAME" == 'push' ]]; then
+                      dist_tag=latest
+                  else
+                      dist_tag=canary
+                  fi
+
+                  while IFS= read -r package_dir; do
+                      npm publish "$package_dir" \
+                          --access public \
+                          --provenance \
+                          --registry https://registry.npmjs.org \
+                          --tag "$dist_tag"
+                  done < "$PACKAGE_LIST"
