@@ -1,6 +1,6 @@
 {
     "name": "@jt4d/common",
-    "version": "0.0.1",
+    "version": "0.0.0",
     "description": "Shared NestJS building blocks for @jt4d modules.",
     "license": "MIT",
     "type": "commonjs",

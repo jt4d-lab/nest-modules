@@ -1,6 +1,6 @@
 {
     "name": "@jt4d/rbac",
-    "version": "0.0.1",
+    "version": "0.0.0",
     "description": "Role-based access control module built on top of @jt4d/common.",
     "license": "MIT",
     "type": "commonjs",
